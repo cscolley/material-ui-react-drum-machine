@@ -1,17 +1,16 @@
 import React from "react";
 import MyAppBar from "./components/MyAppBar";
-import { makeStyles } from "@material-ui/core/styles";
+import {
+  createTheme,
+  ThemeProvider,
+  makeStyles,
+} from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";
 import { CssBaseline } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
-import Slider from "@material-ui/core/Slider";
-import VolumeDown from "@material-ui/icons/VolumeDown";
-import VolumeUp from "@material-ui/icons/VolumeUp";
-import Typography from '@material-ui/core/Typography';
+import DrumPad from "./components/DrumPad";
+import ControlPanel from "./components/ControlPanel";
 
 const drumObjects = [
   {
@@ -70,49 +69,43 @@ const drumObjects = [
   },
 ];
 
+const theme = createTheme();
+
 const useStyles = makeStyles((theme) => ({
-  main: {
+  paper: {
     width: "auto",
     marginTop: theme.spacing(12),
     marginBottom: theme.spacing(3),
     padding: theme.spacing(2),
     paddingLeft: 0,
     "@media (max-width: 600px)": {
-      marginTop: theme.spacing(11),
+      marginTop: theme.spacing(9),
       paddingLeft: theme.spacing(2),
       paddingTop: theme.spacing(4),
     },
-  },
-  button: {
-    width: "100%",
-    height: theme.spacing(10),
   },
   controlPanel: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
   },
-  slider: {
-    marginTop: theme.spacing(2),
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
-  },
-  display: {
-    backgroundColor: "#d5d9e3",
-    height: theme.spacing(6),
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
-    padding: theme.spacing(1),
-  },
 }));
 
 const App = () => {
-  const { main, button, controlPanel, slider, display } = useStyles();
+  const { root, paper, controlPanel } = useStyles();
+
+  const defaultDisplay = "Let's Play!";
 
   const [powerOn, setPowerOn] = React.useState(true);
+  const [display, setDisplay] = React.useState(defaultDisplay);
   const [volume, setVolume] = React.useState(30);
 
   const handleSwitchChange = (event) => {
     setPowerOn(event.target.checked);
+  };
+
+  const handleDisplayChange = (value) => {
+    setDisplay(value);
+    setTimeout(() => setDisplay(defaultDisplay), 2000);
   };
 
   const handleVolumeChange = (event, newVolume) => {
@@ -120,11 +113,11 @@ const App = () => {
   };
 
   return (
-    <div>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <MyAppBar />
       <Container maxWidth="sm">
-        <Paper elevation={3} className={main}>
+        <Paper elevation={3} className={paper}>
           <Grid container spacing={4} justifyContent="center">
             <Grid
               container
@@ -135,15 +128,16 @@ const App = () => {
               justifyContent="center"
             >
               {drumObjects.map((drumObj) => (
-                <Grid item xs={4}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={button}
-                  >
-                    {drumObj.keyTrigger}
-                  </Button>
-                </Grid>
+                <DrumPad
+                  key={drumObj.id}
+                  padId={drumObj.id}
+                  keyCode={drumObj.keyCode}
+                  keyTrigger={drumObj.keyTrigger}
+                  audioSrc={drumObj.url}
+                  updateDisplay={handleDisplayChange}
+                  powerOn={powerOn}
+                  volume={volume}
+                />
               ))}
             </Grid>
             <Grid
@@ -156,47 +150,19 @@ const App = () => {
               justifyContent="center"
               className={controlPanel}
             >
-              <Grid item>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={powerOn}
-                      onChange={handleSwitchChange}
-                      name="power"
-                      color="secondary"
-                    />
-                  }
-                  label="Power"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Paper className={display} elevation={1}>
-                  <Typography variant="h6">
-                    Let's Play!
-                  </Typography>
-                </Paper>
-              </Grid>
-              <Grid container item xs={12} className={slider}>
-                <Grid item>
-                  <VolumeDown />
-                </Grid>
-                <Grid item xs>
-                  <Slider
-                    value={volume}
-                    onChange={handleVolumeChange}
-                    aria-labelledby="continuous-slider"
-                  />
-                </Grid>
-                <Grid item>
-                  <VolumeUp />
-                </Grid>
-              </Grid>
+              <ControlPanel
+                powerOn={powerOn}
+                handleSwitchChange={handleSwitchChange}
+                display={display}
+                volume={volume}
+                handleVolumeChange={handleVolumeChange}
+              />
             </Grid>
           </Grid>
         </Paper>
       </Container>
-    </div>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
