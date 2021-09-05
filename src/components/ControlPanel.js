@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
     padding: theme.spacing(1),
   },
+  disabledColor:{
+    color: '#A6A6A6',
+  }, 
 }));
 
 const ControlPanel = ({
@@ -30,8 +33,9 @@ const ControlPanel = ({
   display,
   volume,
   handleVolumeChange,
+  disabled
 }) => {
-  const { slider, displayPanel } = useStyles();
+  const { slider, displayPanel, disabledColor } = useStyles();
 
   return (
     <>
@@ -50,22 +54,26 @@ const ControlPanel = ({
       </Grid>
       <Grid item xs={12}>
         <Paper className={displayPanel} elevation={1}>
-          <Typography variant="h6">{display}</Typography>
+          {disabled && (<Typography variant="h6" className={disabledColor}>POWER OFF</Typography>)}
+          {!disabled && (<Typography variant="h6">{display}</Typography>)}          
         </Paper>
       </Grid>
       <Grid container item xs={12} className={slider}>
         <Grid item>
-          <VolumeDown />
+        {disabled && <VolumeDown className={disabledColor} />}
+          {!disabled && <VolumeDown />}
         </Grid>
         <Grid item xs>
           <Slider
             value={volume}
             onChange={handleVolumeChange}
             aria-labelledby="continuous-slider"
+            disabled={disabled}
           />
         </Grid>
         <Grid item>
-          <VolumeUp />
+          {disabled && <VolumeUp className={disabledColor} />}
+          {!disabled && <VolumeUp />}
         </Grid>
       </Grid>
     </>

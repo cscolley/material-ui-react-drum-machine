@@ -91,16 +91,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const App = () => {
-  const { root, paper, controlPanel } = useStyles();
+  const { paper, controlPanel } = useStyles();
 
   const defaultDisplay = "Let's Play!";
 
   const [powerOn, setPowerOn] = React.useState(true);
   const [display, setDisplay] = React.useState(defaultDisplay);
   const [volume, setVolume] = React.useState(30);
+  const [disabled, setDisabled] = React.useState(false);
 
   const handleSwitchChange = (event) => {
     setPowerOn(event.target.checked);
+    if (event.target.checked) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
   };
 
   const handleDisplayChange = (value) => {
@@ -137,6 +143,7 @@ const App = () => {
                   updateDisplay={handleDisplayChange}
                   powerOn={powerOn}
                   volume={volume}
+                  disabled={disabled}
                 />
               ))}
             </Grid>
@@ -156,6 +163,7 @@ const App = () => {
                 display={display}
                 volume={volume}
                 handleVolumeChange={handleVolumeChange}
+                disabled={disabled}
               />
             </Grid>
           </Grid>

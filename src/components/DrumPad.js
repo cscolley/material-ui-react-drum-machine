@@ -19,6 +19,7 @@ const DrumPad = ({
   updateDisplay,
   powerOn,
   volume,
+  disabled
 }) => {
   const { button } = useStyles();
 
@@ -52,6 +53,7 @@ const DrumPad = ({
         className={button}
         id={padId}
         onClick={playAudio}
+        disabled={disabled}
       >
         <audio id={keyTrigger} src={audioSrc} />
         {keyTrigger}
