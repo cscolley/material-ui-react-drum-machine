@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/material-ui-react-drum-machine/static/css/main.a86a602a.chunk.css",
+    "main.js": "/material-ui-react-drum-machine/static/js/main.c7122f95.chunk.js",
+    "main.js.map": "/material-ui-react-drum-machine/static/js/main.c7122f95.chunk.js.map",
+    "runtime-main.js": "/material-ui-react-drum-machine/static/js/runtime-main.2bb6073c.js",
+    "runtime-main.js.map": "/material-ui-react-drum-machine/static/js/runtime-main.2bb6073c.js.map",
+    "static/js/2.d1656dd3.chunk.js": "/material-ui-react-drum-machine/static/js/2.d1656dd3.chunk.js",
+    "static/js/2.d1656dd3.chunk.js.map": "/material-ui-react-drum-machine/static/js/2.d1656dd3.chunk.js.map",
+    "static/js/3.467d3404.chunk.js": "/material-ui-react-drum-machine/static/js/3.467d3404.chunk.js",
+    "static/js/3.467d3404.chunk.js.map": "/material-ui-react-drum-machine/static/js/3.467d3404.chunk.js.map",
+    "index.html": "/material-ui-react-drum-machine/index.html",
+    "static/css/main.a86a602a.chunk.css.map": "/material-ui-react-drum-machine/static/css/main.a86a602a.chunk.css.map",
+    "static/js/2.d1656dd3.chunk.js.LICENSE.txt": "/material-ui-react-drum-machine/static/js/2.d1656dd3.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.2bb6073c.js",
+    "static/js/2.d1656dd3.chunk.js",
+    "static/css/main.a86a602a.chunk.css",
+    "static/js/main.c7122f95.chunk.js"
+  ]
+}
